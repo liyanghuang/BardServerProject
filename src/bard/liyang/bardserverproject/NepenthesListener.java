@@ -14,7 +14,9 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 public class NepenthesListener implements Listener{
 	
+	// this is needed to set metadata for the creeper until i figure out a better way to determine which creepers came from this bow
 	BardServerProject plugin;
+	
 
 	NepenthesListener(BardServerProject plugin)
 	{

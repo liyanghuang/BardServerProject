@@ -7,6 +7,31 @@ import org.bukkit.inventory.ItemStack;
 
 public class Glow extends Enchantment {
 
+	public static void registerGlow() {
+		try 
+		{
+			java.lang.reflect.Field f = Enchantment.class.getDeclaredField("acceptingNew");
+			f.setAccessible(true);
+			f.set(null, true);
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		try 
+		{
+			Glow glow = new Glow("glow");
+			Enchantment.registerEnchantment(glow);
+		}
+		catch (IllegalArgumentException e)
+		{
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+    }
+	
 	public Glow(String id) {
 		super(NamespacedKey.minecraft(id));
 	}
