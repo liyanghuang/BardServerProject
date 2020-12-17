@@ -1,0 +1,8 @@
+name: BardServerProject
+main: bard.liyang.bardserverproject.BardServerProject
+version: 1.0
+api-version: 1.16
+commands:
+ removeusers:
+  description: Removes user yaml data for weapon exclusivity
+  usage: /<command>
