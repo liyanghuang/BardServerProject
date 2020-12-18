@@ -20,6 +20,7 @@ public class RarityManager {
 	
 	public void removeUser(String item)
 	{
+		System.out.println("Removing user for " + item);
 		if(itemsUsed.containsKey(item))
 		{
 			if(itemsUsed.get(item) > 0)
@@ -32,6 +33,7 @@ public class RarityManager {
 	
 	public void addUser(String item)
 	{
+		System.out.println("Adding user for " + item);
 		if(itemsUsed.containsKey(item))
 		{
 			itemsUsed.put(item, itemsUsed.get(item) + 1);

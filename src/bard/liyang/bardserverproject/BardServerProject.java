@@ -15,12 +15,13 @@ public class BardServerProject extends JavaPlugin{
 	{
 		Glow.registerGlow();
 		Map<String,Integer> rarityMap = new HashMap<String, Integer>();
-		rarityMap.put("Nepenthes", 80);
+		rarityMap.put("Nepenthes", 3);
 		RarityManager.rm.setRarities(rarityMap);
 		RarityManager.rm.loadData(); // load used data saved from yaml
 		getServer().getPluginManager().registerEvents(new EventListener(), this);
 		getServer().getPluginManager().registerEvents(new NepenthesListener(this), this);
-		getServer().getPluginManager().registerEvents(new RandomLootGenerator(), this);
+		getServer().getPluginManager().registerEvents(new RandomLootGenerator(this), this);
+		getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
 		CommandManager cm = new CommandManager();
 		this.getCommand("removeusers").setExecutor(cm);
 	}

@@ -5,10 +5,15 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class RandomLootGenerator implements Listener{
 	
@@ -16,9 +21,11 @@ public class RandomLootGenerator implements Listener{
 	private List<EpicItem> epicItems;
 	private List<RareItem> rareItems;
 	private List<UncommonItem> uncommonItems;
+	private BardServerProject plugin;
 	
-	public RandomLootGenerator()
+	public RandomLootGenerator(BardServerProject plugin)
 	{
+		this.plugin = plugin;
 		legendItems = new ArrayList<LegendaryItem>();
 		epicItems = new ArrayList<EpicItem>();
 		rareItems = new ArrayList<RareItem>();
@@ -26,6 +33,35 @@ public class RandomLootGenerator implements Listener{
 		
 		epicItems.add(new Nepenthes());
 
+	}
+	
+	@EventHandler
+	public void captureItemBreaks(PlayerItemBreakEvent event)
+	{
+		if(event.getBrokenItem().getItemMeta().hasLore())
+			RarityManager.rm.removeUser(event.getBrokenItem().getItemMeta().getDisplayName().substring(4));
+	}
+
+    @EventHandler
+    public void onItemDespawnEvent(ItemDespawnEvent event) 
+    {
+    	if(event.getEntity().getItemStack().getItemMeta().hasLore())
+			RarityManager.rm.removeUser(event.getEntity().getItemStack().getItemMeta().getDisplayName().substring(4));
+    }
+	
+	@EventHandler
+	public void captureItemDestruction(EntityDamageEvent event)
+	{
+		if(event.getEntity() instanceof Item)
+		{
+			Item item = (Item) event.getEntity(); // add meta data so we don't have multiple removals
+			if(item.getItemStack().getItemMeta().hasLore() && !item.hasMetadata("itemDestroy"))
+			{
+				System.out.println("destroying item");
+				item.setMetadata("itemDestroy", new FixedMetadataValue(plugin, true));
+				RarityManager.rm.removeUser(item.getItemStack().getItemMeta().getDisplayName().substring(4));
+			}
+		}
 	}
 	
 	@EventHandler
@@ -41,7 +77,7 @@ public class RandomLootGenerator implements Listener{
 					if(c.getInventory().addItem(li).isEmpty()) // we only add a user if we know the store was successful
 						RarityManager.rm.addUser(li.getItemMeta().getDisplayName().substring(4));
 
-				EpicItem ei = generateEpicItem(0.06f);
+				EpicItem ei = generateEpicItem(0.66f);
 				if(ei != null)
 					if(c.getInventory().addItem(ei).isEmpty()) // we only add a user if we know the store was successful
 						RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
