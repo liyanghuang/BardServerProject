@@ -3,26 +3,21 @@ package bard.liyang.bardserverproject;
 
 import java.util.Arrays;
 
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import java.util.Random;
+
+import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
+import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
 
 public class EventListener implements Listener{
 	
-	private static Random rand = new Random();
 
     @EventHandler 
     public void onArrowShoot(EntityShootBowEvent event)
@@ -37,7 +32,7 @@ public class EventListener implements Listener{
 			creeper.setVelocity(event.getProjectile().getVelocity());
 			ItemMeta im = event.getBow().getItemMeta();
 			im.setLore(Arrays.asList("nep bow"));
-			im.setDisplayName(bard.liyang.bardserverproject.ColorConverter.color("&5&k&lnep"));
+			im.setDisplayName(bard.liyang.bardserverproject.Util.ColorConverter.color("&5&k&lnep"));
 			event.getBow().setItemMeta(im);
 			event.getProjectile().remove();
     	}
@@ -49,7 +44,7 @@ public class EventListener implements Listener{
 			tnt.setVelocity(event.getProjectile().getVelocity());
 			ItemMeta im = event.getBow().getItemMeta();
 			im.setLore(Arrays.asList("tnt bow"));
-			im.setDisplayName(bard.liyang.bardserverproject.ColorConverter.color("&4&n&ltnt"));
+			im.setDisplayName(bard.liyang.bardserverproject.Util.ColorConverter.color("&4&n&ltnt"));
 			event.getBow().setItemMeta(im);
 			event.getProjectile().remove();
     	}
@@ -69,69 +64,15 @@ public class EventListener implements Listener{
 
     }
     
-    @EventHandler
-    public void onProjectileHit(ProjectileHitEvent event)
-    {
-    	World thisWorld = event.getEntity().getWorld();
-    	if(event.getEntity() instanceof Arrow)
-    	{
-    		if(event.getEntity().getShooter() instanceof Player)
-    		{
-    			PlayerInventory inv = ((Player)event.getEntity().getShooter()).getInventory();
-    			if(inv.getItemInMainHand().getItemMeta().getDisplayName().equals("indra"))
-    			{
-    				
-					if(event.getHitBlock() != null)
-					{
-						for(int i = 0; i < 10; i++)
-						{
-							Location newLoc = new Location(thisWorld, 
-									event.getHitBlock().getLocation().getX() + rand.nextInt(5),
-									event.getHitBlock().getLocation().getY(),
-									event.getHitBlock().getLocation().getZ() + rand.nextInt(5));
-							thisWorld.strikeLightning(newLoc);
-						}
-					}
-					if(event.getHitEntity() != null)
-					{
-						for(int i = 0; i < 10; i++)
-						{
-							Location newLoc = new Location(thisWorld, 
-									event.getHitEntity().getLocation().getX() + rand.nextInt(5),
-									event.getHitEntity().getLocation().getY(),
-									event.getHitEntity().getLocation().getZ() + rand.nextInt(5));
-							thisWorld.strikeLightning(newLoc);
-						}
-					}
-    			}
-    		}
-/*
-			if(event.getHitBlock() != null)
-			{
-				for(int i = 0; i < 10; i++)
-					event.getEntity().getWorld().strikeLightning(event.getHitBlock().getLocation());
-			}
-			if(event.getHitEntity() != null)
-				for(int i = 0; i < 10; i++)
-					event.getEntity().getWorld().strikeLightning(event.getHitEntity().getLocation());
-					*/
-    	}
-    }
-    
-    @EventHandler
-    public void handleLightningDamage(EntityDamageEvent event)
-    {
-    	if(event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING)
-    	{
-    		event.setDamage(20);
-    	}
-    }
     
     @EventHandler
     public void onJoin(PlayerJoinEvent event)
     {
+    	Indra indra = new Indra();
     	Nepenthes nep = new Nepenthes();
     	event.getPlayer().getInventory().addItem(nep);
+    	event.getPlayer().getInventory().addItem(indra);
+    	event.getPlayer().getInventory().addItem(new SnowmanBow());
     	event.getPlayer().updateInventory();
     }
     

@@ -1,8 +1,10 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.CustomItems.UncommonItems;
 
 import java.util.List;
 
 import org.bukkit.Material;
+
+import bard.liyang.bardserverproject.CustomItems.CustomItem;
 
 public class UncommonItem extends CustomItem{
 

@@ -1,7 +1,9 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.CustomItems.LegendaryItems;
 
 import java.util.List;
 import org.bukkit.Material;
+
+import bard.liyang.bardserverproject.CustomItems.CustomItem;
 
 public class LegendaryItem extends CustomItem{
 	

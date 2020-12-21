@@ -4,6 +4,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import bard.liyang.bardserverproject.Util.RarityManager;
+
 public class CommandManager implements CommandExecutor{
 
 	@Override

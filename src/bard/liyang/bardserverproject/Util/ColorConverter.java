@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

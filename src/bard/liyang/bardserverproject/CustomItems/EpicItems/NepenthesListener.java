@@ -1,10 +1,10 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.CustomItems.EpicItems;
 
 
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -12,13 +12,16 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveCreeper;
+import net.minecraft.server.v1_16_R3.WorldServer;
+
 public class NepenthesListener implements Listener{
 	
 	// this is needed to set metadata for the creeper until i figure out a better way to determine which creepers came from this bow
 	BardServerProject plugin;
-	
 
-	NepenthesListener(BardServerProject plugin)
+	public NepenthesListener(BardServerProject plugin)
 	{
 		this.plugin = plugin;
 	}
@@ -30,12 +33,20 @@ public class NepenthesListener implements Listener{
     	if(im.hasLore() && 
     			im.getLore().get(0).substring(4, 14).equals("A bow said")) // skip first 4 characters b/c they will be mod chars
     	{
+    		/*
 			Creeper creeper = (Creeper)event.getEntity().getWorld().spawnEntity(event.getProjectile().getLocation(), EntityType.CREEPER); 
-			creeper.setPowered(true);
-			creeper.setMetadata("nep", new FixedMetadataValue(plugin, true));
-			creeper.ignite();
-			creeper.setAbsorptionAmount(30);
-			creeper.setVelocity(event.getProjectile().getVelocity());
+			*/
+    		AggressiveCreeper creeper = new AggressiveCreeper(event.getProjectile().getLocation());
+    		
+			WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
+			world.addEntity(creeper);
+
+    		Creeper craftCreeper = (Creeper)creeper.getBukkitEntity();
+			craftCreeper.setPowered(true);
+			craftCreeper.setMetadata("nep", new FixedMetadataValue(plugin, true));
+			//craftCreeper.ignite();
+			craftCreeper.setAbsorptionAmount(30);
+			craftCreeper.setVelocity(event.getProjectile().getVelocity());
 			event.getProjectile().remove();
     	}
 

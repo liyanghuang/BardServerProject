@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.CustomItems;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

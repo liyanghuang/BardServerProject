@@ -4,6 +4,14 @@ import java.util.Map;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import bard.liyang.bardserverproject.CustomEnchants.Glow;
+import bard.liyang.bardserverproject.CustomItems.CustomItemListener;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.IndraListener;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.NepenthesListener;
+import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBowListener;
+import bard.liyang.bardserverproject.Util.RandomLootGenerator;
+import bard.liyang.bardserverproject.Util.RarityManager;
+
 
 public class BardServerProject extends JavaPlugin{
 	
@@ -22,6 +30,8 @@ public class BardServerProject extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new NepenthesListener(this), this);
 		getServer().getPluginManager().registerEvents(new RandomLootGenerator(this), this);
 		getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
+		getServer().getPluginManager().registerEvents(new IndraListener(), this);
+		getServer().getPluginManager().registerEvents(new SnowmanBowListener(), this);
 		CommandManager cm = new CommandManager();
 		this.getCommand("removeusers").setExecutor(cm);
 	}

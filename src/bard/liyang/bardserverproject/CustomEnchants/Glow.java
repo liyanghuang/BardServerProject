@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.CustomEnchants;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;

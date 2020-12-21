@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,15 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+
+import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.EpicItem;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.LegendaryItem;
+import bard.liyang.bardserverproject.CustomItems.RareItems.RareItem;
+import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
+import bard.liyang.bardserverproject.CustomItems.UncommonItems.UncommonItem;
 
 public class RandomLootGenerator implements Listener{
 	
@@ -32,6 +41,9 @@ public class RandomLootGenerator implements Listener{
 		uncommonItems = new ArrayList<UncommonItem>();
 		
 		epicItems.add(new Nepenthes());
+		epicItems.add(new Indra());
+		
+		rareItems.add(new SnowmanBow());
 
 	}
 	

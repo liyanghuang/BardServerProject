@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject;
+package bard.liyang.bardserverproject.CustomItems.EpicItems;
 
 import java.util.Arrays;
 
