@@ -59,7 +59,7 @@ public class IndraListener implements Listener{
 	    {
 	    	if(event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING)
 	    	{
-	    		event.setDamage(20);
+	    		event.setDamage(10);
 	    	}
 	    }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -75,6 +76,7 @@ public class BlackholeListener implements Listener{
 					
 					Block block = blocks.get(RNGesus.rng.getRandom(blocksSize));
 					FallingBlock fblock = arrow.getWorld().spawnFallingBlock(block.getLocation(), block.getBlockData());
+					block.setType(Material.AIR);
 					fblock.setVelocity(vectorUp);
 					fblock.setGravity(false);
 					fblock.setDropItem(false);
