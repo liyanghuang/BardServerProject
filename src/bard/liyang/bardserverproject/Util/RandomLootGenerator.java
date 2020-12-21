@@ -67,7 +67,7 @@ public class RandomLootGenerator implements Listener{
 		if(event.getEntity() instanceof Item)
 		{
 			Item item = (Item) event.getEntity(); // add meta data so we don't have multiple removals
-			if(item.getItemStack().getItemMeta().hasLore() && !item.hasMetadata("itemDestroy"))
+			if(item.getItemStack().hasItemMeta() && item.getItemStack().getItemMeta().hasLore() && !item.hasMetadata("itemDestroy"))
 			{
 				System.out.println("destroying item");
 				item.setMetadata("itemDestroy", new FixedMetadataValue(plugin, true));

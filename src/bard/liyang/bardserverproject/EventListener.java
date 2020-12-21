@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import bard.liyang.bardserverproject.CustomItems.EpicItems.Blackhole;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
 import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
@@ -73,6 +74,7 @@ public class EventListener implements Listener{
     	event.getPlayer().getInventory().addItem(nep);
     	event.getPlayer().getInventory().addItem(indra);
     	event.getPlayer().getInventory().addItem(new SnowmanBow());
+    	event.getPlayer().getInventory().addItem(new Blackhole());
     	event.getPlayer().updateInventory();
     }
     

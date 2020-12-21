@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import bard.liyang.bardserverproject.CustomEnchants.Glow;
 import bard.liyang.bardserverproject.CustomItems.CustomItemListener;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.BlackholeListener;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.IndraListener;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.NepenthesListener;
 import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBowListener;
@@ -32,6 +33,7 @@ public class BardServerProject extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new CustomItemListener(), this);
 		getServer().getPluginManager().registerEvents(new IndraListener(), this);
 		getServer().getPluginManager().registerEvents(new SnowmanBowListener(), this);
+		getServer().getPluginManager().registerEvents(new BlackholeListener(this), this); 
 		CommandManager cm = new CommandManager();
 		this.getCommand("removeusers").setExecutor(cm);
 	}

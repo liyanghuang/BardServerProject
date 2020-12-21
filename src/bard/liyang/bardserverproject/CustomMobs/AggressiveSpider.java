@@ -3,28 +3,27 @@ package bard.liyang.bardserverproject.CustomMobs;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 
-import net.minecraft.server.v1_16_R3.EntityCreeper;
 import net.minecraft.server.v1_16_R3.EntityLiving;
+import net.minecraft.server.v1_16_R3.EntitySpider;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.GenericAttributes;
 import net.minecraft.server.v1_16_R3.PathfinderGoalNearestAttackableTarget;
 
-public class AggressiveCreeper extends EntityCreeper{
-	
-	public AggressiveCreeper(Location loc)
+public class AggressiveSpider extends EntitySpider{
+
+	public AggressiveSpider(Location loc)
 	{
-		super(EntityTypes.CREEPER, ((CraftWorld)loc.getWorld()).getHandle());
+		super(EntityTypes.SPIDER, ((CraftWorld)loc.getWorld()).getHandle());
 		this.setPosition(loc.getX(), loc.getY(), loc.getZ());
 		
+		this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(7);
 		
-		// this needs to be set to prevent crash
+		//setting yaw, doesn't prevent crash but maybe is useful
 		this.h(loc.getYaw());
 		this.i(loc.getYaw());
 
 		this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityLiving.class, true));
 
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(.4);
-
 	}
-
 }

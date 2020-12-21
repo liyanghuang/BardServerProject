@@ -1,10 +1,17 @@
 package bard.liyang.bardserverproject.CustomItems.RareItems;
 
-import org.bukkit.entity.EntityType;
+import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Snowman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+
+import bard.liyang.bardserverproject.CustomMobs.AggressiveSnowman;
+import net.minecraft.server.v1_16_R3.WorldServer;
 
 public class SnowmanBowListener implements Listener{
 	
@@ -14,10 +21,29 @@ public class SnowmanBowListener implements Listener{
 		if(event.getBow().getItemMeta().hasLore() 
 				&& event.getBow().getItemMeta().getLore().get(0).substring(4, 16).equals("Who the fuck"))
 		{
-			LivingEntity frosty = (LivingEntity)event.getEntity().getWorld().spawnEntity(event.getProjectile().getLocation(), EntityType.SNOWMAN);
-			frosty.setVelocity(event.getProjectile().getVelocity());
-			frosty.setAbsorptionAmount(30);
+			AggressiveSnowman frosty= new AggressiveSnowman(event.getProjectile().getLocation());
+    		
+			WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
+			world.addEntity(frosty);
+			
+			Snowman craftFrosty = (Snowman)frosty.getBukkitEntity();
+			craftFrosty.setCustomName(ChatColor.YELLOW + "Frosty");
+			craftFrosty.setCustomNameVisible(true);
+			craftFrosty.setVelocity(event.getProjectile().getVelocity());
+			craftFrosty.setAbsorptionAmount(30);
 			event.getProjectile().remove();
+		}
+	}
+	
+	@EventHandler
+	public void onSnowballHit(ProjectileHitEvent event)
+	{
+		if(event.getEntity() instanceof Snowball)
+		{
+			if(event.getHitEntity() instanceof LivingEntity)
+			{
+				((LivingEntity)event.getHitEntity()).damage(0.5);
+			}
 		}
 	}
 }
