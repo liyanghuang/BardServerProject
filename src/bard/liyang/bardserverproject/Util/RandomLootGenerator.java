@@ -19,6 +19,8 @@ import bard.liyang.bardserverproject.BardServerProject;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.EpicItem;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Blackhole;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.GladosPortalGun;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.LegendaryItem;
 import bard.liyang.bardserverproject.CustomItems.RareItems.RareItem;
 import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
@@ -40,10 +42,19 @@ public class RandomLootGenerator implements Listener{
 		rareItems = new ArrayList<RareItem>();
 		uncommonItems = new ArrayList<UncommonItem>();
 		
+		// ADD ITEMS TO THE LOOT GENERATOR HERE
+		// Legendary items
+		legendItems.add(new Blackhole());
+		legendItems.add(new GladosPortalGun());
+		
+		// Epic items
 		epicItems.add(new Nepenthes());
 		epicItems.add(new Indra());
 		
+		// Rare items
 		rareItems.add(new SnowmanBow());
+		
+		// Uncommon items
 
 	}
 	
@@ -84,23 +95,48 @@ public class RandomLootGenerator implements Listener{
 			Chest c = (Chest)event.getClickedBlock().getState();
 			if(c.getLootTable() != null)
 			{
-				LegendaryItem li = generateLegendaryItem(.02f);
+				 boolean[] chosen = new boolean[c.getInventory().getSize()]; // This checks which slots are already taken in the inventory.
+			     
+				int slot;
+				int maxTries = 10; // only try a certain number of times
+				do 
+				{
+					slot = RNGesus.rng.getRandom(c.getInventory().getSize());
+					if(c.getInventory().getItem(slot) != null)
+						chosen[slot] = true;
+					maxTries--;
+				}
+				while(chosen[slot] && maxTries > 0); // Make sure the slot does not already have an item in it.
+				
+				LegendaryItem li = generateLegendaryItem(1f); // .03
 				if(li != null)
-					if(c.getInventory().addItem(li).isEmpty()) // we only add a user if we know the store was successful
-						RarityManager.rm.addUser(li.getItemMeta().getDisplayName().substring(4));
+				{
+					c.getInventory().setItem(slot, li); // we only add a user if we know the store was successful
+					RarityManager.rm.addUser(li.getItemMeta().getDisplayName().substring(4));
+					return;
+				}
 
-				EpicItem ei = generateEpicItem(0.66f);
+				EpicItem ei = generateEpicItem(1f); // .08
 				if(ei != null)
-					if(c.getInventory().addItem(ei).isEmpty()) // we only add a user if we know the store was successful
-						RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
+				{
+					c.getInventory().setItem(slot, ei); // we only add a user if we know the store was successful
+					RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
+					return;
+				}
 
-				RareItem ri = generateRareItem(0.15f);
+				RareItem ri = generateRareItem(1f); // .15
 				if(ri != null)
-					c.getInventory().addItem(ri); // just try to add the item
+				{
+					c.getInventory().setItem(slot, ri); // just try to add the item
+					return;
+				}
 
-				UncommonItem ui = generateUncommonItem(0.3f);
+				UncommonItem ui = generateUncommonItem(1f); // .3
 				if(ui != null)
-					c.getInventory().addItem(ui); // just try to add the item
+				{
+					c.getInventory().setItem(slot, ui); // just try to add the item
+					return;
+				}
 			}
 		}
 	}
@@ -121,7 +157,7 @@ public class RandomLootGenerator implements Listener{
 				String itemName = legendItems.get(shuffleArray[i]).getItemMeta().getDisplayName().substring(4); // stripping color mods we know it's 4 b/c it's legend item
 				if(RarityManager.rm.getRarity(itemName) > RarityManager.rm.getUsed(itemName)) // we can make the item
 				{
-					LegendaryItem li = (LegendaryItem) legendItems.get(i).clone();
+					LegendaryItem li = (LegendaryItem) legendItems.get(shuffleArray[i]).clone();
 					li.addRarityLore(RarityManager.rm.getUsed(itemName) + 1, RarityManager.rm.getRarity(itemName));
 					return li;
 				}
@@ -143,7 +179,7 @@ public class RandomLootGenerator implements Listener{
 				String itemName = epicItems.get(shuffleArray[i]).getItemMeta().getDisplayName().substring(4); // stripping color mods we know it's 4 b/c it's epic item
 				if(RarityManager.rm.getRarity(itemName) > RarityManager.rm.getUsed(itemName)) // we can make the item
 				{
-					EpicItem ei = (EpicItem) epicItems.get(i).clone();
+					EpicItem ei = (EpicItem) epicItems.get(shuffleArray[i]).clone();
 					ei.addRarityLore(RarityManager.rm.getUsed(itemName) + 1, RarityManager.rm.getRarity(itemName));
 					return ei;
 				}

@@ -12,10 +12,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import bard.liyang.bardserverproject.CustomItems.EpicItems.Blackhole;
-import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
-import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
-import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
+import bard.liyang.bardserverproject.CustomItems.UncommonItems.GenericUncommonItem;
 
 public class EventListener implements Listener{
 	
@@ -69,6 +66,7 @@ public class EventListener implements Listener{
     @EventHandler
     public void onJoin(PlayerJoinEvent event)
     {
+    	/*
     	Indra indra = new Indra();
     	Nepenthes nep = new Nepenthes();
     	event.getPlayer().getInventory().addItem(nep);
@@ -76,6 +74,9 @@ public class EventListener implements Listener{
     	event.getPlayer().getInventory().addItem(new SnowmanBow());
     	event.getPlayer().getInventory().addItem(new Blackhole());
     	event.getPlayer().updateInventory();
+    	event.getPlayer().getInventory().addItem(new GladosPortalGun());
+    	*/
+    	event.getPlayer().getInventory().addItem(new GenericUncommonItem());
     }
     
 }

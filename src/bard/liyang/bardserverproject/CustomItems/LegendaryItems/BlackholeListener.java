@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject.CustomItems.EpicItems;
+package bard.liyang.bardserverproject.CustomItems.LegendaryItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
 import bard.liyang.bardserverproject.Util.RNGesus;
 
 public class BlackholeListener implements Listener{
@@ -94,8 +95,7 @@ public class BlackholeListener implements Listener{
 	@EventHandler
 	public void onBowShoot(EntityShootBowEvent event)
 	{
-		if(event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasLore() && 
-				event.getBow().getItemMeta().getLore().get(0).substring(4, 15).equals("Spawn black"))
+		if(event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(CustomEnchants.BLACKHOLE))
 			event.getProjectile().setMetadata("blackhole", new FixedMetadataValue(plugin, true));
 	}
 	

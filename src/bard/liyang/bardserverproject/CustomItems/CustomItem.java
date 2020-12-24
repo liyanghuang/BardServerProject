@@ -5,8 +5,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import bard.liyang.bardserverproject.CustomEnchants.Glow;
+import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
 
 public class CustomItem extends ItemStack{
 	
@@ -28,7 +27,7 @@ public class CustomItem extends ItemStack{
 			lore.set(i, bard.liyang.bardserverproject.Util.ColorConverter.color(loreColorMods + lore.get(i)));
 		im.setLore(lore);
 		if(shiny)
-			im.addEnchant(new Glow("glow"), 1, true);
+			im.addEnchant(CustomEnchants.GLOW, 1, true);
 		this.setItemMeta(im);
 	}
 	

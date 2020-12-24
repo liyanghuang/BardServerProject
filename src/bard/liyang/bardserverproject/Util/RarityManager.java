@@ -18,6 +18,21 @@ public class RarityManager {
 	private FileConfiguration usedConfig;
 	private boolean destroyYML = false;
 	
+	public RarityManager()
+	{
+		Map<String,Integer> rarityMap = new HashMap<String, Integer>();
+
+		// RARITIES NEED TO BE PUT INTO THE MAP FOR THE MAX
+		rarityMap.put("Nepenthes", 3);
+		rarityMap.put("Indra", 3);
+		rarityMap.put("Blackhole", 1);
+		rarityMap.put("GLaDOS's Portal Gun", 1);
+		// END RARITY SECTION
+
+		this.rarityMap = rarityMap;
+		loadData();
+	}
+	
 	public void removeUser(String item)
 	{
 		System.out.println("Removing user for " + item);

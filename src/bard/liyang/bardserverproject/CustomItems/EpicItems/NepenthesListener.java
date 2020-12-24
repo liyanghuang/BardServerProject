@@ -13,11 +13,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
 import bard.liyang.bardserverproject.CustomMobs.AggressiveCreeper;
 import bard.liyang.bardserverproject.CustomMobs.AggressiveSkeleton;
 import bard.liyang.bardserverproject.CustomMobs.AggressiveSpider;
@@ -39,9 +39,7 @@ public class NepenthesListener implements Listener{
 	@EventHandler 
     public void onArrowShoot(EntityShootBowEvent event)
     {
-		ItemMeta im = event.getBow().getItemMeta();
-    	if(im.hasLore() && 
-    			im.getLore().get(0).substring(4, 14).equals("A bow said")) // skip first 4 characters b/c they will be mod chars
+    	if(event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(CustomEnchants.NEPENTHES))
     	{
     		// we are for sure spawning something 
     		Vector whereToSpawn = event.getProjectile().getVelocity().multiply(0.2);
