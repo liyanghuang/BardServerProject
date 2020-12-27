@@ -48,5 +48,6 @@ public class AggressiveZombie extends EntityZombie{
 		this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityLiving.class, true));
 
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(.35);	
+		this.getWorld().addEntity(this);
 	}
 }

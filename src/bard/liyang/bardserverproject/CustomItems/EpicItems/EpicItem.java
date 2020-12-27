@@ -9,6 +9,6 @@ public class EpicItem extends CustomItem{
 	
 	public EpicItem(Material type, String name, List<String> lore)
 	{
-		super(type, "&3&l", "&a&o", name, lore, true);
+		super(type, "&5&l", "&9&o", name, lore, true);
 	}
 }

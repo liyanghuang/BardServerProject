@@ -10,7 +10,7 @@ public class UncommonItem extends CustomItem{
 
 	public UncommonItem(Material type, String name, List<String> lore)
 	{
-		super(type, "&d", "&b&o", name, lore, true);
+		super(type, "&2", "&e&o", name, lore, true);
 	}
 }
 

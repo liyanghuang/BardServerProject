@@ -3,7 +3,6 @@ package bard.liyang.bardserverproject.CustomItems.EpicItems;
 
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
@@ -24,7 +23,7 @@ import bard.liyang.bardserverproject.CustomMobs.AggressiveSpider;
 import bard.liyang.bardserverproject.CustomMobs.AggressiveWitherSkeleton;
 import bard.liyang.bardserverproject.CustomMobs.AggressiveZombie;
 import bard.liyang.bardserverproject.Util.RNGesus;
-import net.minecraft.server.v1_16_R3.WorldServer;
+import net.md_5.bungee.api.ChatColor;
 
 public class NepenthesListener implements Listener{
 	
@@ -47,9 +46,6 @@ public class NepenthesListener implements Listener{
     		if(whichMob == 0)
     		{
 				AggressiveCreeper creeper = new AggressiveCreeper(event.getProjectile().getLocation());
-				
-				WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
-				world.addEntity(creeper);
 
 				Creeper craftCreeper = (Creeper)creeper.getBukkitEntity();
 				if(RNGesus.rng.getRandom() < .25)
@@ -57,6 +53,8 @@ public class NepenthesListener implements Listener{
 				craftCreeper.setMetadata("nep", new FixedMetadataValue(plugin, true));
 				craftCreeper.setAbsorptionAmount(30);
 				craftCreeper.setVelocity(event.getProjectile().getVelocity());
+				craftCreeper.setRemoveWhenFarAway(true);
+				craftCreeper.setCustomName(ChatColor.DARK_PURPLE + ""+ ChatColor.BOLD + "Nepenthes\' Artillery");
 				event.getProjectile().remove();
     		}
     		else if(whichMob == 1)
@@ -64,38 +62,34 @@ public class NepenthesListener implements Listener{
     			AggressiveWitherSkeleton witherskeleton = new AggressiveWitherSkeleton(event.getProjectile().getLocation()
     					.add(whereToSpawn));
 				
-				WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
-				world.addEntity(witherskeleton);
-
 				WitherSkeleton craftWitherSkeleton = (WitherSkeleton)witherskeleton.getBukkitEntity();
 				craftWitherSkeleton.setAbsorptionAmount(10);
 				craftWitherSkeleton.setVelocity(event.getProjectile().getVelocity());
+				craftWitherSkeleton.setCustomName(ChatColor.DARK_PURPLE + ""+ ChatColor.BOLD + "Nepenthes\' Soldier");
+				craftWitherSkeleton.setRemoveWhenFarAway(true);
 				event.getProjectile().remove();
     		}
     		else if(whichMob == 2)
     		{
      			AggressiveSkeleton skeleton = new AggressiveSkeleton(event.getProjectile().getLocation());
 			
-				WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
-				world.addEntity(skeleton);
-
 				Skeleton craftSkeleton = (Skeleton)skeleton.getBukkitEntity();
 				craftSkeleton.setAbsorptionAmount(10);
 				craftSkeleton.setVelocity(event.getProjectile().getVelocity());
+				craftSkeleton.setCustomName(ChatColor.DARK_PURPLE + ""+ ChatColor.BOLD + "Nepenthes\' Archer");
+				craftSkeleton.setRemoveWhenFarAway(true);
 				event.getProjectile().remove();
-   			
     		}
     		else if(whichMob == 3)
     		{
     			AggressiveZombie zombie = new AggressiveZombie(event.getProjectile().getLocation()
     					.add(whereToSpawn));
 			
-				WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
-				world.addEntity(zombie);
-
 				Zombie craftZombie = (Zombie)zombie.getBukkitEntity();
 				craftZombie.setAbsorptionAmount(10);
 				craftZombie.setVelocity(event.getProjectile().getVelocity());
+				craftZombie.setCustomName(ChatColor.DARK_PURPLE + ""+ ChatColor.BOLD + "Nepenthes\' Armored Soldier");
+				craftZombie.setRemoveWhenFarAway(true);
 				event.getProjectile().remove();
     		}
     		else if(whichMob == 4)
@@ -103,12 +97,11 @@ public class NepenthesListener implements Listener{
     			AggressiveSpider spider = new AggressiveSpider(event.getProjectile().getLocation()
     					.add(whereToSpawn));
 			
-				WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
-				world.addEntity(spider);
-
 				Spider craftSpider = (Spider)spider.getBukkitEntity();
 				craftSpider.setAbsorptionAmount(10);
 				craftSpider.setVelocity(event.getProjectile().getVelocity());
+				craftSpider.setCustomName(ChatColor.DARK_PURPLE + ""+ ChatColor.BOLD + "Nepenthes\' Calvary");
+				craftSpider.setRemoveWhenFarAway(true);
 				event.getProjectile().remove();
     		}
     	}

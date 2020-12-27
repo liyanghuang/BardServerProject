@@ -24,5 +24,6 @@ public class AggressiveEnderman extends EntityEnderman{
 		this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityLiving.class, true));
 
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(.5);
+		this.getWorld().addEntity(this);
 	}
 }

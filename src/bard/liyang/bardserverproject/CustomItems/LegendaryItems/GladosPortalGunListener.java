@@ -887,9 +887,12 @@ public class GladosPortalGunListener implements Listener{
 	{
 		for(int i = 0; i < 4; i++)
 		{
-			portals[i].setType(Material.AIR);
-			portals[i].removeMetadata("Portal1", plugin);
-			portals[i].removeMetadata("Portal2", plugin);
+			if(portals[i] != null)
+			{
+				portals[i].setType(Material.AIR);
+				portals[i].removeMetadata("Portal1", plugin);
+				portals[i].removeMetadata("Portal2", plugin);
+			}
 		}
 	}
 

@@ -1,7 +1,6 @@
 package bard.liyang.bardserverproject.CustomItems.RareItems;
 
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Snowman;
@@ -12,7 +11,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 
 import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
 import bard.liyang.bardserverproject.CustomMobs.AggressiveSnowman;
-import net.minecraft.server.v1_16_R3.WorldServer;
 
 public class SnowmanBowListener implements Listener{
 	
@@ -22,15 +20,13 @@ public class SnowmanBowListener implements Listener{
 		if(event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(CustomEnchants.SNOWMANBOW))
 		{
 			AggressiveSnowman frosty= new AggressiveSnowman(event.getProjectile().getLocation());
-    		
-			WorldServer	world =((CraftWorld)event.getEntity().getWorld()).getHandle();
-			world.addEntity(frosty);
 			
 			Snowman craftFrosty = (Snowman)frosty.getBukkitEntity();
-			craftFrosty.setCustomName(ChatColor.YELLOW + "Frosty");
+			craftFrosty.setCustomName(ChatColor.DARK_BLUE + "Frosty");
 			craftFrosty.setCustomNameVisible(true);
 			craftFrosty.setVelocity(event.getProjectile().getVelocity());
 			craftFrosty.setAbsorptionAmount(30);
+			craftFrosty.setRemoveWhenFarAway(true);
 			event.getProjectile().remove();
 		}
 	}

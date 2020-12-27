@@ -20,5 +20,6 @@ public class AggressiveSnowman extends EntitySnowman{
 		this.i(loc.getYaw());
 
 		this.targetSelector.a(0, new PathfinderGoalNearestAttackableTarget<>(this, EntityLiving.class, true));
+		this.getWorld().addEntity(this);
 	}
 }

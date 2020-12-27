@@ -27,6 +27,7 @@ public class RarityManager {
 		rarityMap.put("Indra", 3);
 		rarityMap.put("Blackhole", 1);
 		rarityMap.put("GLaDOS's Portal Gun", 1);
+		rarityMap.put("Desert Eagle", 3);
 		// END RARITY SECTION
 
 		this.rarityMap = rarityMap;

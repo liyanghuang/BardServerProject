@@ -6,3 +6,15 @@ commands:
  removeusers:
   description: Removes user yaml data for weapon exclusivity
   usage: /<command>
+ armor:
+  description: adds netherite armor
+  usage: /<command>
+ general:
+  description: spawns general
+  usage: /<command>
+ mongol:
+  description: spawns mongol
+  usage: /<command>
+ hydra:
+  description: spawns mongol
+  usage: /<command>

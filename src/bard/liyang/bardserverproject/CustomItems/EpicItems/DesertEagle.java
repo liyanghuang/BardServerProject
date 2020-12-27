@@ -8,15 +8,14 @@ import org.bukkit.persistence.PersistentDataType;
 
 import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
 
-public class Indra extends EpicItem{
-
-	public Indra() 
+public class DesertEagle extends EpicItem{
+	
+	public DesertEagle()
 	{
-		super(Material.BOW, "Indra", Arrays.asList("How exactly does lightning strike underground? Who knows..."));
-		this.addUnsafeEnchantment(CustomEnchants.INDRA, 1);
+		super(Material.GOLDEN_HORSE_ARMOR, "Desert Eagle", Arrays.asList("They say it only takes one shot to the head to kill..."));
+		this.addUnsafeEnchantment(CustomEnchants.DESERTEAGLE, 1);
 		ItemMeta im = this.getItemMeta();
-		im.getPersistentDataContainer().set(IndraListener.nk, PersistentDataType.LONG, 0l);
+		im.getPersistentDataContainer().set(DesertEagleListener.nk, PersistentDataType.LONG, 0l);
 		this.setItemMeta(im);
 	}
-
 }

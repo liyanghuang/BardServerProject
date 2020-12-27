@@ -1,11 +1,17 @@
 package bard.liyang.bardserverproject.CustomItems.UncommonItems;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
 import bard.liyang.bardserverproject.Util.RNGesus;
+import bard.liyang.bardserverproject.Util.RomanNumber;
+import net.md_5.bungee.api.ChatColor;
 
 public class GenericUncommonItem extends UncommonItem{
 	
@@ -13,6 +19,10 @@ public class GenericUncommonItem extends UncommonItem{
 	{
 		super(Material.DIAMOND_SWORD, "Placeholder Name", Arrays.asList("Placeholder lore"));
 		
+		// I am putting all the strings in the constructor b/c i'm not sure if it's good to keep these arrays in memory for the entire
+		// time the plugin is running. This sacrifices some overhead whenever an uncommon item is created (which shouldn't be too common)
+		// but saves us having to keep these huge arrays in memory
+
 		String[] creatorList = {
 				"Ironclad", 
 				"Smithen", 
@@ -57,7 +67,9 @@ public class GenericUncommonItem extends UncommonItem{
 				"Heatwaker",
 				"Advantager’s Swordstock",
 				"Metal from the Dark Mile",
-				"Fable Bladed"
+				"Fable Bladed",
+				"Bimbooboo the Frog",
+				"Frog the Toad"
 		};
 		String[] adjectiveList = {
 				"old-style automatic",
@@ -249,7 +261,7 @@ public class GenericUncommonItem extends UncommonItem{
 				"Lighter and Handier",
 				"Quintessential Australian",
 				"Mobile High-Tech",
-				"Potent yet Dazzling",
+				"Potent Yet Dazzling",
 				"French-Made Durandal",
 				"Deadly Biochemical",
 				"Offensive Strategic",
@@ -323,7 +335,7 @@ public class GenericUncommonItem extends UncommonItem{
 				"Sri Lankan Keteriya",
 				"Vietnamese Dong Son",
 				"Roman Fasces",
-				"Russion Sovnya",
+				"Russian Sovnya",
 				"North American Tomahawk",
 				"Japanese Ono (斧)"
 		};
@@ -374,7 +386,8 @@ public class GenericUncommonItem extends UncommonItem{
 		String name =  creator + "\'s " + capitalAdjectives[adjectiveNum] + " ";
 		String lore = "";
 
-		switch(RNGesus.rng.getRandom(5))
+		int itemType = RNGesus.rng.getRandom(5);
+		switch(itemType)
 		{
 			case 0:
 				name += swordNames[RNGesus.rng.getRandom(swordNames.length)];
@@ -450,10 +463,105 @@ public class GenericUncommonItem extends UncommonItem{
 				this.setType(Material.CROSSBOW);
 				break;
 		}
+		int level;
+		switch(itemType)
+		{
+			case 0:
+				level = RNGesus.rng.getRandom(3) + 1;
+				if(level < 3)
+					this.addEnchantment(Enchantment.FIRE_ASPECT, level);
+				level = RNGesus.rng.getRandom(5) + 1;
+				if(level < 4)
+					this.addEnchantment(Enchantment.SWEEPING_EDGE, level);
+			case 1:
+				level = RNGesus.rng.getRandom(5) + 1;
+				switch(RNGesus.rng.getRandom(4))
+				{
+					case 0:
+						this.addEnchantment(Enchantment.DAMAGE_ARTHROPODS, level);
+						break;
+					case 1:
+						this.addEnchantment(Enchantment.DAMAGE_UNDEAD, level);
+						break;
+					case 2:
+						this.addEnchantment(Enchantment.DAMAGE_ALL, level);
+						break;
+				}
+				level = RNGesus.rng.getRandom(3) + 1;
+				if(level < 3)
+					this.addUnsafeEnchantment(Enchantment.KNOCKBACK, level);
+				break;
+			case 2:
+				level = RNGesus.rng.getRandom(7) + 1;
+				if (level < 6)
+					this.addEnchantment(Enchantment.IMPALING, level);
+				level = RNGesus.rng.getRandom(5) + 1;
+				if (level < 4)
+					this.addEnchantment(Enchantment.LOYALTY, level);
+				break;
+			case 3:
+				level = RNGesus.rng.getRandom(7) + 1;
+				if (level < 6)
+					this.addEnchantment(Enchantment.ARROW_DAMAGE, level);
+				level = RNGesus.rng.getRandom(2);
+				if (level == 1)
+					this.addEnchantment(Enchantment.ARROW_FIRE, 1);
+				level = RNGesus.rng.getRandom(2);
+				if (level == 1)
+					this.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+				level = RNGesus.rng.getRandom(4) + 1;
+				if (level < 3)
+					this.addEnchantment(Enchantment.ARROW_KNOCKBACK, level);
+				break;
+			case 4:
+				level = RNGesus.rng.getRandom(4) + 1;
+				if (level < 4)
+					this.addEnchantment(Enchantment.QUICK_CHARGE, level);
+				switch(RNGesus.rng.getRandom(3))
+				{
+					case 0:
+						level = RNGesus.rng.getRandom(4) + 1;
+						this.addEnchantment(Enchantment.PIERCING, level);
+						break;
+					case 1:
+						if(RNGesus.rng.getRandom(2) == 1)
+							this.addEnchantment(Enchantment.QUICK_CHARGE, 1);
+						break;
+				}
+				break;
+		}
 		
+		List<String> loreArray = new ArrayList<String>();
+
+		level = RNGesus.rng.getRandom(4) + 1;
+		if (level < 3)
+		{
+			this.addUnsafeEnchantment(CustomEnchants.POISON, level);
+			loreArray.add(ChatColor.GRAY + "Poison " + RomanNumber.toRoman(level));
+		}
+		level = RNGesus.rng.getRandom(4) + 1;
+		if (level < 3)
+		{
+			this.addUnsafeEnchantment(CustomEnchants.WITHER, level);
+			loreArray.add(ChatColor.GRAY + "Wither " + RomanNumber.toRoman(level));
+		}
+		level = RNGesus.rng.getRandom(4) + 1;
+		if (level < 3)
+		{
+			this.addUnsafeEnchantment(CustomEnchants.SLOWNESS, level);
+			loreArray.add(ChatColor.GRAY + "Slow " + RomanNumber.toRoman(level));
+		}
+		level = RNGesus.rng.getRandom(4) + 1;
+		if (level < 3)
+		{
+			this.addUnsafeEnchantment(CustomEnchants.BLINDNESS, level);
+			loreArray.add(ChatColor.GRAY + "Blind " + RomanNumber.toRoman(level));
+		}
+
 		ItemMeta im = this.getItemMeta();
+		loreArray.add(im.getLore().get(0).substring(0,4) + lore);
 		im.setDisplayName(im.getDisplayName().substring(0,2) + name);
-		im.setLore(Arrays.asList(im.getLore().get(0).substring(0,4) + lore));
+		im.setLore(loreArray);
 		this.setItemMeta(im);
 	}
 }

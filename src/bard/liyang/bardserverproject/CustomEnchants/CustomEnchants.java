@@ -10,6 +10,12 @@ public class CustomEnchants {
 	public static Enchantment INDRA = new IndraEnchant("indra", "Indra", 1);
 	public static Enchantment BLACKHOLE = new BlackholeEnchant("blackhole", "Blackhole", 1);
 	public static Enchantment GLADOSPORTALGUN = new GladosPortalGunEnchant("gladosportalgun", "GladosPortalGun", 1);
+	public static Enchantment DESERTEAGLE = new DesertEagleEnchant("deserteagle", "DesertEagle", 1);
+	public static Enchantment POISON = new PoisonEnchant("poison", "Poison", 2);
+	public static Enchantment SLOWNESS = new SlownessEnchant("slowness", "Slowness", 2);
+	public static Enchantment BLINDNESS = new BlindnessEnchant("blindness", "Blindness", 2);
+	public static Enchantment WITHER = new WitherEnchant("wither", "Wither", 2);
+
 
 
 	
@@ -21,6 +27,11 @@ public class CustomEnchants {
 		registerEnchant(INDRA);
 		registerEnchant(BLACKHOLE);
 		registerEnchant(GLADOSPORTALGUN);
+		registerEnchant(DESERTEAGLE);
+		registerEnchant(POISON);
+		registerEnchant(SLOWNESS);
+		registerEnchant(BLINDNESS);
+		registerEnchant(WITHER);
 	}
 
 	public static void registerEnchant(Enchantment enchant)

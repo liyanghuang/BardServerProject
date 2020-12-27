@@ -10,6 +10,6 @@ public class RareItem extends CustomItem{
 
 	public RareItem(Material type, String name, List<String> lore)
 	{
-		super(type, "&e", "&9&o", name, lore, true);
+		super(type, "&1", "&3&o", name, lore, true);
 	}
 }
