@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject.CustomMobs;
+package bard.liyang.bardserverproject.CustomMobs.MongolSkeleton;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -3,12 +3,10 @@ package bard.liyang.bardserverproject.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
@@ -27,15 +26,28 @@ import bard.liyang.bardserverproject.CustomItems.EpicItems.EpicItem;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Blackhole;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Excalibur;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.GladosPortalGun;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.LegendaryItem;
+import bard.liyang.bardserverproject.CustomItems.RareItems.Aegis;
+import bard.liyang.bardserverproject.CustomItems.RareItems.BookOfWater;
+import bard.liyang.bardserverproject.CustomItems.RareItems.FireworkBow;
 import bard.liyang.bardserverproject.CustomItems.RareItems.FlingStick;
+import bard.liyang.bardserverproject.CustomItems.RareItems.Heartbleed;
+import bard.liyang.bardserverproject.CustomItems.RareItems.HermesBoots;
 import bard.liyang.bardserverproject.CustomItems.RareItems.RareItem;
+import bard.liyang.bardserverproject.CustomItems.RareItems.Salty;
 import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
 import bard.liyang.bardserverproject.CustomItems.UncommonItems.GenericUncommonItem;
 import bard.liyang.bardserverproject.CustomItems.UncommonItems.UncommonItem;
-import bard.liyang.bardserverproject.CustomMobs.HydraSilverfish;
-import bard.liyang.bardserverproject.CustomMobs.MongolSkeleton;
+import bard.liyang.bardserverproject.CustomMobs.MachineGunner;
+import bard.liyang.bardserverproject.CustomMobs.Swapper;
+import bard.liyang.bardserverproject.CustomMobs.Yumi;
+import bard.liyang.bardserverproject.CustomMobs.GenericUncommonMonsters.GenericUncommonEnderman;
+import bard.liyang.bardserverproject.CustomMobs.GenericUncommonMonsters.GenericUncommonSkeleton;
+import bard.liyang.bardserverproject.CustomMobs.GenericUncommonMonsters.GenericUncommonSpider;
+import bard.liyang.bardserverproject.CustomMobs.GenericUncommonMonsters.GenericUncommonZombie;
+import bard.liyang.bardserverproject.CustomMobs.MongolSkeleton.MongolSkeleton;
 import bard.liyang.bardserverproject.CustomMobs.ZombieGeneral.ZombieGeneral;
 
 public class RandomLootGenerator implements Listener{
@@ -44,10 +56,6 @@ public class RandomLootGenerator implements Listener{
 	private List<EpicItem> epicItems;
 	private List<RareItem> rareItems;
 	
-	private List<LivingEntity> legendMonsters;
-	private List<LivingEntity> epicMonsters;
-	private List<LivingEntity> rareMonsters;
-
 	private BardServerProject plugin;
 	
 	public RandomLootGenerator(BardServerProject plugin)
@@ -57,14 +65,11 @@ public class RandomLootGenerator implements Listener{
 		epicItems = new ArrayList<EpicItem>();
 		rareItems = new ArrayList<RareItem>();
 		
-		legendMonsters = new ArrayList<LivingEntity>();
-		epicMonsters = new ArrayList<LivingEntity>();
-		rareMonsters = new ArrayList<LivingEntity>();
-		
 		// ADD ITEMS TO THE LOOT GENERATOR HERE
 		// Legendary items
 		legendItems.add(new Blackhole());
 		legendItems.add(new GladosPortalGun());
+		legendItems.add(new Excalibur());
 		
 		// Epic items
 		epicItems.add(new Nepenthes());
@@ -74,25 +79,91 @@ public class RandomLootGenerator implements Listener{
 		// Rare items
 		rareItems.add(new SnowmanBow());
 		rareItems.add(new FlingStick());
-		
-		// Legendary monsters
-		legendMonsters.add((LivingEntity)(new ZombieGeneral(new Location(Bukkit.getWorlds().get(0), 0, 0, 0)).getBukkitEntity()));
-		
-		// Epic monsters
-		epicMonsters.add((LivingEntity)(new MongolSkeleton(new Location(Bukkit.getWorlds().get(0), 0, 0, 0)).getBukkitEntity()));
-		
-		// Rare monsters
-		rareMonsters.add((LivingEntity)(new HydraSilverfish(new Location(Bukkit.getWorlds().get(0), 0, 0, 0)).getBukkitEntity()));
+		rareItems.add(new Heartbleed());
+		rareItems.add(new Aegis());
+		rareItems.add(new Salty());
+		rareItems.add(new HermesBoots());
+		rareItems.add(new BookOfWater());
+		rareItems.add(new FireworkBow());
+	}
+	
+	// loot drops for powerful creature deaths
+	@EventHandler
+	public void onCreatureDeath(EntityDeathEvent event)
+	{
+
+		if(event.getEntity().hasMetadata("LegendLoot"))
+		{
+			LegendaryItem li = generateLegendaryItem(.25f); // .03
+			if(li != null)
+			{
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), li);
+				RarityManager.rm.addUser(li.getItemMeta().getDisplayName().substring(4));
+			}
+			EpicItem ei = generateEpicItem(.75f); // .08
+			if(ei != null)
+			{
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ei);
+				RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
+			}	
+			RareItem ri = generateRareItem(1f); // .08
+			if(ri != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ri);
+			UncommonItem ui = generateUncommonItem(1f); // .08
+			if(ui != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ui);	
+		}
+		if(event.getEntity().hasMetadata("EpicLoot"))
+		{
+			EpicItem ei = generateEpicItem(.25f); // .08
+			if(ei != null)
+			{
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ei);
+				RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
+			}	
+			RareItem ri = generateRareItem(.75f); // .08
+			if(ri != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ri);
+			UncommonItem ui = generateUncommonItem(1f); // .08
+			if(ui != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ui);	
+		}
+		if(event.getEntity().hasMetadata("RareLoot"))
+		{
+			RareItem ri = generateRareItem(.25f); // .08
+			if(ri != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ri);
+			UncommonItem ui = generateUncommonItem(.75f); // .08
+			if(ui != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ui);	
+		}
+		if(event.getEntity().hasMetadata("UncommonLoot"))
+		{
+			UncommonItem ui = generateUncommonItem(.5f); // .08
+			if(ui != null)
+				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ui);	
+		}
 	}
 	
 	@EventHandler
 	public void onCreatureSpawn(CreatureSpawnEvent event)
 	{
+		if(event.getEntityType() == EntityType.CAT && RNGesus.rng.getRandom() < 0.001)
+		{
+			if(RarityManager.rm.getRarity("Yumi") > RarityManager.rm.getUsed("Yumi"))
+			{
+				new Yumi(event.getEntity().getLocation());
+				event.setCancelled(true);
+				return;
+			}
+		}
+
 		if(event.getSpawnReason() == SpawnReason.NATURAL && event.getEntity() instanceof Monster) 
 		{
 			// The item method cannot work b/c living entities cannot be cloned so we must do it this way
 			// legendary
-			if(RNGesus.rng.getRandom() < 0.5f)
+
+			if(RNGesus.rng.getRandom() < 0.001f)
 			{
 				switch(RNGesus.rng.getRandom(1))
 				{
@@ -104,7 +175,7 @@ public class RandomLootGenerator implements Listener{
 				return;
 			}
 			// epic
-			if(RNGesus.rng.getRandom() < 0.5f)
+			if(RNGesus.rng.getRandom() < 0.003f)
 			{
 				switch(RNGesus.rng.getRandom(1))
 				{
@@ -116,24 +187,37 @@ public class RandomLootGenerator implements Listener{
 				return;
 			}
 			// rare
-			if(RNGesus.rng.getRandom() < 0.5f)
+			if(RNGesus.rng.getRandom() < 0.02)
 			{
-				switch(RNGesus.rng.getRandom(1))
+				switch(RNGesus.rng.getRandom(2))
 				{
 					case 0:
-						new HydraSilverfish(event.getLocation());
+						new MachineGunner(event.getLocation());
 						break;
+					case 1:
+						new Swapper(event.getLocation());
 				}
 				event.setCancelled(true);
 				return;
 			}
 			// uncommon
-			if(RNGesus.rng.getRandom() < 0.5f)
+			if(RNGesus.rng.getRandom() < 0.05f)
 			{
-				switch(RNGesus.rng.getRandom(1))
+				switch(RNGesus.rng.getRandom(4))
 				{
 					case 0:
+						new GenericUncommonZombie(event.getLocation());
 						break;
+					case 1:
+						new GenericUncommonSkeleton(event.getLocation());
+						break;
+					case 2:
+						new GenericUncommonSpider(event.getLocation());
+						break;
+					case 3:
+						new GenericUncommonEnderman(event.getLocation());
+						break;
+
 				}
 				event.setCancelled(true);
 				return;
@@ -192,7 +276,7 @@ public class RandomLootGenerator implements Listener{
 				}
 				while(chosen[slot] && maxTries > 0); // Make sure the slot does not already have an item in it.
 				
-				LegendaryItem li = generateLegendaryItem(1f); // .03
+				LegendaryItem li = generateLegendaryItem(.03f); // .03
 				if(li != null)
 				{
 					c.getInventory().setItem(slot, li); // we only add a user if we know the store was successful
@@ -209,7 +293,7 @@ public class RandomLootGenerator implements Listener{
 				}
 				while(chosen[slot] && maxTries > 0); // Make sure the slot does not already have an item in it.
 
-				EpicItem ei = generateEpicItem(1f); // .08
+				EpicItem ei = generateEpicItem(.08f); // .08
 				if(ei != null)
 				{
 					c.getInventory().setItem(slot, ei); // we only add a user if we know the store was successful
@@ -226,7 +310,7 @@ public class RandomLootGenerator implements Listener{
 				}
 				while(chosen[slot] && maxTries > 0); // Make sure the slot does not already have an item in it.
 
-				RareItem ri = generateRareItem(1f); // .15
+				RareItem ri = generateRareItem(.15f); // .15
 				if(ri != null)
 					c.getInventory().setItem(slot, ri); // just try to add the item
 
@@ -240,7 +324,7 @@ public class RandomLootGenerator implements Listener{
 				}
 				while(chosen[slot] && maxTries > 0); // Make sure the slot does not already have an item in it.
 
-				UncommonItem ui = generateUncommonItem(1f); // .3
+				UncommonItem ui = generateUncommonItem(.3f); // .3
 				if(ui != null)
 					c.getInventory().setItem(slot, ui); // just try to add the item
 			}
@@ -303,7 +387,7 @@ public class RandomLootGenerator implements Listener{
 	public UncommonItem generateUncommonItem(float percent) // simple function, no need to check usage
 	{
 		if(RNGesus.rng.getRandom() < percent)
-			return new GenericUncommonItem();
+			return new GenericUncommonItem(0);
 		return null;
 	}
 }

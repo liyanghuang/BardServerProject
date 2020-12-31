@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
-import bard.liyang.bardserverproject.CustomMobs.AggressiveSnowman;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveMonsters.AggressiveSnowman;
 
 public class SnowmanBowListener implements Listener{
 	

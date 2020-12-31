@@ -66,13 +66,13 @@ public class GenericUncommonItemListener implements Listener{
 		{
 			LivingEntity le = (LivingEntity)event.getHitEntity();
 			if(event.getEntity().hasMetadata("poison"))
-				le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, event.getEntity().getMetadata("poison").get(0).asInt(), false, true, true));
+				le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, event.getEntity().getMetadata("poison").get(0).asInt()-1, false, true, true));
 			if(event.getEntity().hasMetadata("wither"))
-				le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, event.getEntity().getMetadata("wither").get(0).asInt(), false, true, true));
+				le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, event.getEntity().getMetadata("wither").get(0).asInt()-1, false, true, true));
 			if(event.getEntity().hasMetadata("blind"))
-				le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, event.getEntity().getMetadata("blind").get(0).asInt(), false, true, true));
+				le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, event.getEntity().getMetadata("blind").get(0).asInt()-1, false, true, true));
 			if(event.getEntity().hasMetadata("slow"))
-				le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, event.getEntity().getMetadata("slow").get(0).asInt(), false, true, true));
+				le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, event.getEntity().getMetadata("slow").get(0).asInt()-1, false, true, true));
 			if(event.getEntity().getType() == EntityType.TRIDENT)
 			{
 				EntityThrownTrident t = ((CraftTrident)event.getEntity()).getHandle();

@@ -9,8 +9,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import bard.liyang.bardserverproject.CustomMobs.HydraSilverfish;
-import bard.liyang.bardserverproject.CustomMobs.MongolSkeleton;
+import bard.liyang.bardserverproject.CustomMobs.HydraSilverfish.HydraSilverfish;
+import bard.liyang.bardserverproject.CustomMobs.MongolSkeleton.MongolSkeleton;
 import bard.liyang.bardserverproject.CustomMobs.ZombieGeneral.ZombieGeneral;
 import bard.liyang.bardserverproject.Util.RarityManager;
 

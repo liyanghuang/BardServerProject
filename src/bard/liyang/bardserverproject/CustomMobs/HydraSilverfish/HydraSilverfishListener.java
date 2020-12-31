@@ -1,9 +1,15 @@
-package bard.liyang.bardserverproject.CustomMobs;
+package bard.liyang.bardserverproject.CustomMobs.HydraSilverfish;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Silverfish;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+
+import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.Util.RNGesus;
 
 public class HydraSilverfishListener implements Listener{
 
@@ -32,4 +38,17 @@ public class HydraSilverfishListener implements Listener{
 		}
 	}
 
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event)
+	{
+		if(event.getBlock().getType() == Material.STONE)
+		{
+			if(RNGesus.rng.getRandom() < 0.0005)
+			{
+				HydraSilverfish hs = new HydraSilverfish(event.getBlock().getLocation().add(0.5, 0, 0.5));
+				Silverfish crafths = (Silverfish)hs.getBukkitEntity();
+				crafths.setMetadata("RareLoot", new FixedMetadataValue(BardServerProject.getPlugin(BardServerProject.class), true));
+			}
+		}
+	}
 }

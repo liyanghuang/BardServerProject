@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject.CustomMobs;
+package bard.liyang.bardserverproject.CustomMobs.HydraSilverfish;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
@@ -15,6 +15,7 @@ public class HydraSilverfish extends EntitySilverfish{
 
 	private FixedMetadataValue meta = new FixedMetadataValue(BardServerProject.getPlugin(BardServerProject.class), true);
 
+	// since this multiplies we'll apply the rare loot tag when we spawn it specially. This is kinda a special mob
 	public HydraSilverfish(Location loc)
 	{
 		super(EntityTypes.SILVERFISH, ((CraftWorld)loc.getWorld()).getHandle());
@@ -23,6 +24,7 @@ public class HydraSilverfish extends EntitySilverfish{
 		Silverfish craftSilverfish = (Silverfish)this.getBukkitEntity();
 		
 		craftSilverfish.setCustomName(ChatColor.DARK_BLUE+ "Hydra Silverfish");
+		craftSilverfish.setCustomNameVisible(true);
 		craftSilverfish.setMetadata("HydraSilverfish", meta);
 		craftSilverfish.setRemoveWhenFarAway(true);
 		// this needs to be set to prevent crash

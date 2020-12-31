@@ -9,10 +9,18 @@ import bard.liyang.bardserverproject.CustomItems.EpicItems.IndraListener;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.NepenthesListener;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.BlackholeListener;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.GladosPortalGunListener;
+import bard.liyang.bardserverproject.CustomItems.RareItems.BookOfWaterListener;
+import bard.liyang.bardserverproject.CustomItems.RareItems.FireworkBowListener;
+import bard.liyang.bardserverproject.CustomItems.RareItems.HeartbleedListener;
 import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBowListener;
 import bard.liyang.bardserverproject.CustomItems.UncommonItems.GenericUncommonItemListener;
-import bard.liyang.bardserverproject.CustomMobs.HydraSilverfishListener;
-import bard.liyang.bardserverproject.CustomMobs.MongolSkeletonListener;
+import bard.liyang.bardserverproject.CustomMobs.BossIntegrityListener;
+import bard.liyang.bardserverproject.CustomMobs.MachineGunnerListener;
+import bard.liyang.bardserverproject.CustomMobs.SwapperListener;
+import bard.liyang.bardserverproject.CustomMobs.YumiListener;
+import bard.liyang.bardserverproject.CustomMobs.GenericUncommonMonsters.GenericUncommonSpiderListener;
+import bard.liyang.bardserverproject.CustomMobs.HydraSilverfish.HydraSilverfishListener;
+import bard.liyang.bardserverproject.CustomMobs.MongolSkeleton.MongolSkeletonListener;
 import bard.liyang.bardserverproject.CustomMobs.ZombieGeneral.ZombieGeneralListener;
 import bard.liyang.bardserverproject.Util.RandomLootGenerator;
 import bard.liyang.bardserverproject.Util.RarityManager;
@@ -30,12 +38,12 @@ public class BardServerProject extends JavaPlugin{
 	{
 		CustomEnchants.registerAllEnchants();
 		addListeners(this);
-		CommandManager cm = new CommandManager();
-		this.getCommand("removeusers").setExecutor(cm);
-		this.getCommand("armor").setExecutor(cm);
-		this.getCommand("general").setExecutor(cm);
-		this.getCommand("mongol").setExecutor(cm);
-		this.getCommand("hydra").setExecutor(cm);
+		//CommandManager cm = new CommandManager();
+		//this.getCommand("removeusers").setExecutor(cm);
+		//this.getCommand("armor").setExecutor(cm);
+		//this.getCommand("general").setExecutor(cm);
+		//this.getCommand("mongol").setExecutor(cm);
+		//this.getCommand("hydra").setExecutor(cm);
 	}
 	
 	// Fired when plugin is disabled
@@ -60,6 +68,15 @@ public class BardServerProject extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new ZombieGeneralListener(), this);
 		getServer().getPluginManager().registerEvents(new MongolSkeletonListener(), this);
 		getServer().getPluginManager().registerEvents(new HydraSilverfishListener(), this);
+		getServer().getPluginManager().registerEvents(new GenericUncommonSpiderListener(), this);
+		getServer().getPluginManager().registerEvents(new MachineGunnerListener(), this);
+		getServer().getPluginManager().registerEvents(new SwapperListener(), this);
+		getServer().getPluginManager().registerEvents(new YumiListener(), this);
+		getServer().getPluginManager().registerEvents(new HeartbleedListener(), this);
+		getServer().getPluginManager().registerEvents(new BossIntegrityListener(), this);
+		getServer().getPluginManager().registerEvents(new BookOfWaterListener(), this);
+		getServer().getPluginManager().registerEvents(new FireworkBowListener(), this);
+
 		gpgl = new GladosPortalGunListener(this);
 		getServer().getPluginManager().registerEvents(gpgl, this); 
 	}

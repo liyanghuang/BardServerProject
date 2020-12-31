@@ -38,6 +38,7 @@ public class ZombieGeneral extends EntityZombie{
 		craftZombie.setCustomName(ChatColor.GOLD + ""+ ChatColor.BOLD + "Zombie General");
 		craftZombie.setCustomNameVisible(true);
 		craftZombie.setMetadata("ZombieGeneral", meta);
+		craftZombie.setMetadata("LegendLoot", meta);
 		craftZombie.setMetadata("ZombieGeneralMinion", new FixedMetadataValue(plugin, 0));
 		craftZombie.setRemoveWhenFarAway(true);
 		
@@ -68,6 +69,7 @@ public class ZombieGeneral extends EntityZombie{
 		this.targetSelector.a(4, new PathfinderGoalHurtByTarget(this));
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(.25);
 		this.getAttributeInstance(GenericAttributes.MAX_HEALTH).setValue(100);
+		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(120);
 		this.setHealth(100);
 		
 		EntityHorseZombie mount = new EntityHorseZombie(EntityTypes.ZOMBIE_HORSE, ((CraftWorld)loc.getWorld()).getHandle());

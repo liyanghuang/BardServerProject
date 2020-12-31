@@ -1,4 +1,4 @@
-package bard.liyang.bardserverproject.CustomMobs;
+package bard.liyang.bardserverproject.CustomMobs.MongolSkeleton;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,6 +38,7 @@ public class MongolSkeleton extends EntitySkeleton{
 		craftSkeleton.setCustomName(ChatColor.DARK_PURPLE + ""+ ChatColor.BOLD + "Ancient Mongolian Chief");
 		craftSkeleton.setCustomNameVisible(true);
 		craftSkeleton.setMetadata("MongolSkeleton", meta);
+		craftSkeleton.setMetadata("EpicLoot", meta);
 		craftSkeleton.setRemoveWhenFarAway(true);
 
 		ItemStack bow = new ItemStack(Material.BOW);
@@ -66,6 +67,7 @@ public class MongolSkeleton extends EntitySkeleton{
 		this.goalSelector.a(1, new PathfinderGoalFloat(this));
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(.25);
 		this.getAttributeInstance(GenericAttributes.MAX_HEALTH).setValue(70);
+		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(120);
 		
 		EntityHorseSkeleton mount = new EntityHorseSkeleton(EntityTypes.SKELETON_HORSE, ((CraftWorld)loc.getWorld()).getHandle());
 		mount.setPosition(loc.getX(), loc.getY(), loc.getZ());

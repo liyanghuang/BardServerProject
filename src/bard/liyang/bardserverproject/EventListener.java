@@ -7,14 +7,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
-import bard.liyang.bardserverproject.CustomItems.EpicItems.DesertEagle;
-import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
-import bard.liyang.bardserverproject.CustomItems.EpicItems.Nepenthes;
-import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Blackhole;
-import bard.liyang.bardserverproject.CustomItems.LegendaryItems.GladosPortalGun;
-import bard.liyang.bardserverproject.CustomItems.RareItems.FlingStick;
-import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
-import bard.liyang.bardserverproject.CustomItems.UncommonItems.GenericUncommonItem;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Excalibur;
+import bard.liyang.bardserverproject.CustomItems.RareItems.Aegis;
+import bard.liyang.bardserverproject.CustomItems.RareItems.BookOfWater;
+import bard.liyang.bardserverproject.CustomItems.RareItems.FireworkBow;
+import bard.liyang.bardserverproject.CustomItems.RareItems.Heartbleed;
+import bard.liyang.bardserverproject.CustomItems.RareItems.HermesBoots;
+import bard.liyang.bardserverproject.CustomItems.RareItems.Salty;
+import bard.liyang.bardserverproject.CustomMobs.MachineGunner;
+import bard.liyang.bardserverproject.CustomMobs.Swapper;
+import bard.liyang.bardserverproject.CustomMobs.Yumi;
+import bard.liyang.bardserverproject.CustomMobs.ZombieGeneral.ZombieGeneral;
 
 public class EventListener implements Listener{
 	
@@ -32,17 +35,26 @@ public class EventListener implements Listener{
     @EventHandler
     public void onJoin(PlayerJoinEvent event)
     {
-    	event.getPlayer().getInventory().addItem(new Nepenthes());
-    	event.getPlayer().getInventory().addItem(new Indra());
-    	event.getPlayer().getInventory().addItem(new SnowmanBow());
-    	event.getPlayer().getInventory().addItem(new Blackhole());
-    	event.getPlayer().getInventory().addItem(new GladosPortalGun());
-    	event.getPlayer().getInventory().addItem(new DesertEagle());
-		event.getPlayer().getInventory().addItem(new GenericUncommonItem());
-		event.getPlayer().getInventory().addItem(new FlingStick());
+    	//event.getPlayer().getInventory().addItem(new Nepenthes());
+    	//event.getPlayer().getInventory().addItem(new Indra());
+    	//event.getPlayer().getInventory().addItem(new SnowmanBow());
+    	//event.getPlayer().getInventory().addItem(new Blackhole());
+    	//event.getPlayer().getInventory().addItem(new GladosPortalGun());
+    	//event.getPlayer().getInventory().addItem(new DesertEagle());
+		//event.getPlayer().getInventory().addItem(new GenericUncommonItem());
+		//event.getPlayer().getInventory().addItem(new FlingStick());
 		//new ZombieGeneral(event.getPlayer().getLocation());
 		//new MongolSkeleton(event.getPlayer().getLocation());
     	//event.getPlayer().updateInventory();
+    	//event.getPlayer().getInventory().addItem(new Excalibur());
+    	//new MachineGunner(event.getPlayer().getLocation());
+    	//new Swapper(event.getPlayer().getLocation());
+    	//new Yumi(event.getPlayer().getLocation());
+		//event.getPlayer().getInventory().addItem(new Heartbleed());
+    	//event.getPlayer().getInventory().addItem(new Aegis());
+    	//event.getPlayer().getInventory().addItem(new Salty());
+    	//event.getPlayer().getInventory().addItem(new FireworkBow());
+
     }
     
 }

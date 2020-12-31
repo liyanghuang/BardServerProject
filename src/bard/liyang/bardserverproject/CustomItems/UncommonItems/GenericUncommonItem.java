@@ -15,7 +15,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class GenericUncommonItem extends UncommonItem{
 	
-	public GenericUncommonItem()
+	public GenericUncommonItem(int weaponType)
 	{
 		super(Material.DIAMOND_SWORD, "Placeholder Name", Arrays.asList("Placeholder lore"));
 		
@@ -387,6 +387,10 @@ public class GenericUncommonItem extends UncommonItem{
 		String lore = "";
 
 		int itemType = RNGesus.rng.getRandom(5);
+		if(weaponType == 1)
+			itemType = RNGesus.rng.getRandom(2); // Melee weapon
+		if(weaponType == 2)
+			itemType = 3; // BOW 
 		switch(itemType)
 		{
 			case 0:

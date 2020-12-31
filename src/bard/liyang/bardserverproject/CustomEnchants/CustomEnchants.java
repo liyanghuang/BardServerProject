@@ -15,6 +15,9 @@ public class CustomEnchants {
 	public static Enchantment SLOWNESS = new SlownessEnchant("slowness", "Slowness", 2);
 	public static Enchantment BLINDNESS = new BlindnessEnchant("blindness", "Blindness", 2);
 	public static Enchantment WITHER = new WitherEnchant("wither", "Wither", 2);
+	public static Enchantment HEARTBLEED = new HeartbleedEnchant("heartbleed", "Heartbleed", 1);
+	public static Enchantment BOOKOFWATER = new BookOfWaterEnchant("bookofwater", "BookOfWater", 1);
+	public static Enchantment FIREWORKBOW = new FireworkBowEnchant("fireworkbow", "FireworkBow", 1);
 
 
 
@@ -32,6 +35,9 @@ public class CustomEnchants {
 		registerEnchant(SLOWNESS);
 		registerEnchant(BLINDNESS);
 		registerEnchant(WITHER);
+		registerEnchant(HEARTBLEED);
+		registerEnchant(BOOKOFWATER);
+		registerEnchant(FIREWORKBOW);
 	}
 
 	public static void registerEnchant(Enchantment enchant)

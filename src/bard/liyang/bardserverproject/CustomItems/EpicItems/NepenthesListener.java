@@ -17,11 +17,11 @@ import org.bukkit.util.Vector;
 
 import bard.liyang.bardserverproject.BardServerProject;
 import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
-import bard.liyang.bardserverproject.CustomMobs.AggressiveCreeper;
-import bard.liyang.bardserverproject.CustomMobs.AggressiveSkeleton;
-import bard.liyang.bardserverproject.CustomMobs.AggressiveSpider;
-import bard.liyang.bardserverproject.CustomMobs.AggressiveWitherSkeleton;
-import bard.liyang.bardserverproject.CustomMobs.AggressiveZombie;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveMonsters.AggressiveCreeper;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveMonsters.AggressiveSkeleton;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveMonsters.AggressiveSpider;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveMonsters.AggressiveWitherSkeleton;
+import bard.liyang.bardserverproject.CustomMobs.AggressiveMonsters.AggressiveZombie;
 import bard.liyang.bardserverproject.Util.RNGesus;
 import net.md_5.bungee.api.ChatColor;
 

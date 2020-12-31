@@ -55,7 +55,7 @@ public class DesertEagleListener implements Listener{
 					world.playSound(eyeLoc.add(eyeDir), Sound.ENTITY_GENERIC_EXPLODE, 4, 1);
 
 					RayTraceResult rt = event.getPlayer().getWorld().rayTrace(eyeLoc, eyeDir, 
-							70, FluidCollisionMode.NEVER, true, 1, isCurrentPlayer);
+							40, FluidCollisionMode.NEVER, true, 1, isCurrentPlayer);
 
 					if(rt != null && rt.getHitEntity() != null)
 					{
@@ -67,7 +67,7 @@ public class DesertEagleListener implements Listener{
 							{
 								world.spawnParticle(Particle.EXPLOSION_LARGE, rt.getHitPosition().toLocation(world), 0);
 								world.spawnParticle(Particle.DAMAGE_INDICATOR, rt.getHitPosition().toLocation(world), 10);
-								le.damage(20);
+								le.damage(20, event.getPlayer());
 							}
 							else if(le instanceof Player)
 							{
@@ -75,31 +75,31 @@ public class DesertEagleListener implements Listener{
 								{
 									world.spawnParticle(Particle.EXPLOSION_LARGE, rt.getHitPosition().toLocation(world), 0);
 									world.spawnParticle(Particle.DAMAGE_INDICATOR, rt.getHitPosition().toLocation(world), 10);
-									le.damage(20);	
+									le.damage(20, event.getPlayer());	
 								}
 								else if(le.getLocation().getY() + 1.35 < rt.getHitPosition().getY())
 								{
 									world.spawnParticle(Particle.EXPLOSION_LARGE, rt.getHitPosition().toLocation(world), 0);
 									world.spawnParticle(Particle.DAMAGE_INDICATOR, rt.getHitPosition().toLocation(world), 10);
-									le.damage(20);
+									le.damage(20, event.getPlayer());
 								}
 								else
 								{
 									world.spawnParticle(Particle.DAMAGE_INDICATOR, rt.getHitPosition().toLocation(world), 10);
-									le.damage(5);
+									le.damage(5, event.getPlayer());
 								}
 							}
 							else if(le.getLocation().getY() + 1.5 < rt.getHitPosition().getY())
 							{
 								world.spawnParticle(Particle.EXPLOSION_LARGE, rt.getHitPosition().toLocation(world), 0);
 								world.spawnParticle(Particle.DAMAGE_INDICATOR, rt.getHitPosition().toLocation(world), 10);
-								le.damage(20);
+								le.damage(20, event.getPlayer());
 							}
 							else
 							{
 								// normal shot
 								world.spawnParticle(Particle.DAMAGE_INDICATOR, rt.getHitPosition().toLocation(world), 10);
-								le.damage(5);
+								le.damage(5, event.getPlayer());
 							}
 						}
 					}
