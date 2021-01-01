@@ -1,8 +1,16 @@
 package bard.liyang.bardserverproject.CustomEnchants;
 
-import org.bukkit.enchantments.Enchantment;
+import java.util.Iterator;
 
-public class CustomEnchants {
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
+
+import bard.liyang.bardserverproject.Util.RarityManager;
+
+public class CustomEnchants implements Listener{
 
 	public static Enchantment GLOW = new Glow("glow", "Glow", 1);
 	public static Enchantment NEPENTHES = new NepenthesEnchant("nepenthes", "Nepenthes", 1);
@@ -18,8 +26,9 @@ public class CustomEnchants {
 	public static Enchantment HEARTBLEED = new HeartbleedEnchant("heartbleed", "Heartbleed", 1);
 	public static Enchantment BOOKOFWATER = new BookOfWaterEnchant("bookofwater", "BookOfWater", 1);
 	public static Enchantment FIREWORKBOW = new FireworkBowEnchant("fireworkbow", "FireworkBow", 1);
-
-
+	public static Enchantment STAFFOFICE = new StaffOfIceEnchant("staffofice", "StaffOfIce", 1);
+	public static Enchantment AIRJORDANS = new AirJordansEnchant("airjordans", "AirJordans", 1);
+	public static Enchantment VANISHING = new VanishingEnchant("vanishing", "Vanishing", 1);
 
 	
 	public static void registerAllEnchants()
@@ -38,6 +47,9 @@ public class CustomEnchants {
 		registerEnchant(HEARTBLEED);
 		registerEnchant(BOOKOFWATER);
 		registerEnchant(FIREWORKBOW);
+		registerEnchant(STAFFOFICE);
+		registerEnchant(AIRJORDANS);
+		registerEnchant(VANISHING);
 	}
 
 	public static void registerEnchant(Enchantment enchant)
@@ -63,5 +75,19 @@ public class CustomEnchants {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event)
+	{
+		Iterator<ItemStack>i = event.getDrops().iterator();
+        while(i.hasNext()){
+            ItemStack item = i.next();
+			if(item.hasItemMeta() && item.getItemMeta().hasEnchant(CustomEnchants.VANISHING))
+			{
+				i.remove();
+				RarityManager.rm.removeUser(item.getItemMeta().getDisplayName().substring(4));
+			}
+        }
 	}
 }

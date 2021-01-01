@@ -40,6 +40,7 @@ public class DesertEagleListener implements Listener{
 				long timer = 0;
 				if(im.getPersistentDataContainer().has(nk, PersistentDataType.LONG))
 					timer = im.getPersistentDataContainer().get(nk, PersistentDataType.LONG);
+				
 
 				if(System.currentTimeMillis() - timer > 2000)
 				{

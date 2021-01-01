@@ -3,7 +3,9 @@ package bard.liyang.bardserverproject;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
+import bard.liyang.bardserverproject.CustomEnchants.StaffOfIceListener;
 import bard.liyang.bardserverproject.CustomItems.CustomItemListener;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.AirJordansListener;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.DesertEagleListener;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.IndraListener;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.NepenthesListener;
@@ -22,6 +24,7 @@ import bard.liyang.bardserverproject.CustomMobs.GenericUncommonMonsters.GenericU
 import bard.liyang.bardserverproject.CustomMobs.HydraSilverfish.HydraSilverfishListener;
 import bard.liyang.bardserverproject.CustomMobs.MongolSkeleton.MongolSkeletonListener;
 import bard.liyang.bardserverproject.CustomMobs.ZombieGeneral.ZombieGeneralListener;
+import bard.liyang.bardserverproject.Util.Patcher;
 import bard.liyang.bardserverproject.Util.RandomLootGenerator;
 import bard.liyang.bardserverproject.Util.RarityManager;
 
@@ -38,12 +41,15 @@ public class BardServerProject extends JavaPlugin{
 	{
 		CustomEnchants.registerAllEnchants();
 		addListeners(this);
-		//CommandManager cm = new CommandManager();
+		//Patcher.patch();
+		CommandManager cm = new CommandManager();
 		//this.getCommand("removeusers").setExecutor(cm);
 		//this.getCommand("armor").setExecutor(cm);
 		//this.getCommand("general").setExecutor(cm);
 		//this.getCommand("mongol").setExecutor(cm);
 		//this.getCommand("hydra").setExecutor(cm);
+		this.getCommand("loadyml").setExecutor(cm);
+		this.getCommand("printyml").setExecutor(cm);
 	}
 	
 	// Fired when plugin is disabled
@@ -76,6 +82,9 @@ public class BardServerProject extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new BossIntegrityListener(), this);
 		getServer().getPluginManager().registerEvents(new BookOfWaterListener(), this);
 		getServer().getPluginManager().registerEvents(new FireworkBowListener(), this);
+		getServer().getPluginManager().registerEvents(new StaffOfIceListener(), this);
+		getServer().getPluginManager().registerEvents(new AirJordansListener(), this);
+		getServer().getPluginManager().registerEvents(new CustomEnchants(), this);
 
 		gpgl = new GladosPortalGunListener(this);
 		getServer().getPluginManager().registerEvents(gpgl, this); 

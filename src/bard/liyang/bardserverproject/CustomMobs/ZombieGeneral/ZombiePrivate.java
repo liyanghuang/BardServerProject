@@ -9,6 +9,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import bard.liyang.bardserverproject.Util.RNGesus;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.EntityZombie;
@@ -43,6 +44,9 @@ public class ZombiePrivate extends EntityZombie{
 		legs.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+		
+		if(RNGesus.rng.getRandom(2) == 0)
+			craftZombie.setBaby();
 		
 		this.setSlot(EnumItemSlot.MAINHAND, CraftItemStack.asNMSCopy(sword));
 		this.setSlot(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(head));

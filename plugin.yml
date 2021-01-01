@@ -18,3 +18,9 @@ commands:
  hydra:
   description: spawns mongol
   usage: /<command>
+ loadyml:
+  description: loads used item data from yml
+  usage: /<command>
+ printyml:
+  description: loads used item data from yml
+  usage: /<command>

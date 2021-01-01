@@ -31,6 +31,8 @@ public class RarityManager {
 		rarityMap.put("Desert Eagle", 3);
 		rarityMap.put("Excalibur", 1);
 		rarityMap.put("Yumi", 1);
+		rarityMap.put("Lissandra's Embrace", 1);
+		rarityMap.put("Air Jordans", 3);
 		// END RARITY SECTION
 
 		this.rarityMap = rarityMap;
@@ -79,6 +81,20 @@ public class RarityManager {
 		if(rarityMap.containsKey(item))
 			return rarityMap.get(item);
 		return -1;
+	}
+	
+	public void printData()
+	{
+		System.out.println("Rarity map");
+		for(String s: rarityMap.keySet())
+		{
+			System.out.println(s + ": " + rarityMap.get(s));
+		}
+		System.out.println("Rarity used");
+		for(String s: itemsUsed.keySet())
+		{
+			System.out.println(s + ": " + itemsUsed.get(s));
+		}
 	}
 	
 	// set rarities before loading data

@@ -7,13 +7,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 
+import bard.liyang.bardserverproject.CustomItems.EpicItems.AirJordans;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Excalibur;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.StaffOfIce;
 import bard.liyang.bardserverproject.CustomItems.RareItems.Aegis;
 import bard.liyang.bardserverproject.CustomItems.RareItems.BookOfWater;
 import bard.liyang.bardserverproject.CustomItems.RareItems.FireworkBow;
 import bard.liyang.bardserverproject.CustomItems.RareItems.Heartbleed;
 import bard.liyang.bardserverproject.CustomItems.RareItems.HermesBoots;
 import bard.liyang.bardserverproject.CustomItems.RareItems.Salty;
+import bard.liyang.bardserverproject.CustomMobs.KillerBunny;
 import bard.liyang.bardserverproject.CustomMobs.MachineGunner;
 import bard.liyang.bardserverproject.CustomMobs.Swapper;
 import bard.liyang.bardserverproject.CustomMobs.Yumi;
@@ -45,6 +48,7 @@ public class EventListener implements Listener{
 		//event.getPlayer().getInventory().addItem(new FlingStick());
 		//new ZombieGeneral(event.getPlayer().getLocation());
 		//new MongolSkeleton(event.getPlayer().getLocation());
+    	//new KillerBunny(event.getPlayer().getLocation());
     	//event.getPlayer().updateInventory();
     	//event.getPlayer().getInventory().addItem(new Excalibur());
     	//new MachineGunner(event.getPlayer().getLocation());
@@ -53,8 +57,8 @@ public class EventListener implements Listener{
 		//event.getPlayer().getInventory().addItem(new Heartbleed());
     	//event.getPlayer().getInventory().addItem(new Aegis());
     	//event.getPlayer().getInventory().addItem(new Salty());
-    	//event.getPlayer().getInventory().addItem(new FireworkBow());
-
+		//event.getPlayer().getInventory().addItem(new StaffOfIce());
+		//event.getPlayer().getInventory().addItem(new AirJordans());
     }
     
 }

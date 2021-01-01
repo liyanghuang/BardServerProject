@@ -15,6 +15,7 @@ public class BossIntegrityListener implements Listener{
 	private BardServerProject plugin = BardServerProject.getPlugin(BardServerProject.class);
 	private FixedMetadataValue meta = new FixedMetadataValue(plugin, true);	
 	
+	/*
 	@EventHandler
 	public void onBossHit(EntityDamageByEntityEvent event)
 	{
@@ -46,4 +47,5 @@ public class BossIntegrityListener implements Listener{
 			}
 		}
 	}
+	*/
 }

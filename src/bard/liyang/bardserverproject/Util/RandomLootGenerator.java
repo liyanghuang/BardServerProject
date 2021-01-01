@@ -5,22 +5,30 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Container;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Monster;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.inventory.ItemStack;
 
 import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.CustomEnchants.CustomEnchants;
+import bard.liyang.bardserverproject.CustomItems.EpicItems.AirJordans;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.DesertEagle;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.EpicItem;
 import bard.liyang.bardserverproject.CustomItems.EpicItems.Indra;
@@ -29,6 +37,7 @@ import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Blackhole;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.Excalibur;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.GladosPortalGun;
 import bard.liyang.bardserverproject.CustomItems.LegendaryItems.LegendaryItem;
+import bard.liyang.bardserverproject.CustomItems.LegendaryItems.StaffOfIce;
 import bard.liyang.bardserverproject.CustomItems.RareItems.Aegis;
 import bard.liyang.bardserverproject.CustomItems.RareItems.BookOfWater;
 import bard.liyang.bardserverproject.CustomItems.RareItems.FireworkBow;
@@ -40,6 +49,7 @@ import bard.liyang.bardserverproject.CustomItems.RareItems.Salty;
 import bard.liyang.bardserverproject.CustomItems.RareItems.SnowmanBow;
 import bard.liyang.bardserverproject.CustomItems.UncommonItems.GenericUncommonItem;
 import bard.liyang.bardserverproject.CustomItems.UncommonItems.UncommonItem;
+import bard.liyang.bardserverproject.CustomMobs.KillerBunny;
 import bard.liyang.bardserverproject.CustomMobs.MachineGunner;
 import bard.liyang.bardserverproject.CustomMobs.Swapper;
 import bard.liyang.bardserverproject.CustomMobs.Yumi;
@@ -56,11 +66,8 @@ public class RandomLootGenerator implements Listener{
 	private List<EpicItem> epicItems;
 	private List<RareItem> rareItems;
 	
-	private BardServerProject plugin;
-	
 	public RandomLootGenerator(BardServerProject plugin)
 	{
-		this.plugin = plugin;
 		legendItems = new ArrayList<LegendaryItem>();
 		epicItems = new ArrayList<EpicItem>();
 		rareItems = new ArrayList<RareItem>();
@@ -70,11 +77,13 @@ public class RandomLootGenerator implements Listener{
 		legendItems.add(new Blackhole());
 		legendItems.add(new GladosPortalGun());
 		legendItems.add(new Excalibur());
+		legendItems.add(new StaffOfIce());
 		
 		// Epic items
 		epicItems.add(new Nepenthes());
 		epicItems.add(new Indra());
 		epicItems.add(new DesertEagle());
+		epicItems.add(new AirJordans());
 		
 		// Rare items
 		rareItems.add(new SnowmanBow());
@@ -96,16 +105,10 @@ public class RandomLootGenerator implements Listener{
 		{
 			LegendaryItem li = generateLegendaryItem(.25f); // .03
 			if(li != null)
-			{
 				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), li);
-				RarityManager.rm.addUser(li.getItemMeta().getDisplayName().substring(4));
-			}
 			EpicItem ei = generateEpicItem(.75f); // .08
 			if(ei != null)
-			{
 				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ei);
-				RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
-			}	
 			RareItem ri = generateRareItem(1f); // .08
 			if(ri != null)
 				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ri);
@@ -117,10 +120,7 @@ public class RandomLootGenerator implements Listener{
 		{
 			EpicItem ei = generateEpicItem(.25f); // .08
 			if(ei != null)
-			{
 				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ei);
-				RarityManager.rm.addUser(ei.getItemMeta().getDisplayName().substring(4));
-			}	
 			RareItem ri = generateRareItem(.75f); // .08
 			if(ri != null)
 				event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), ri);
@@ -189,13 +189,17 @@ public class RandomLootGenerator implements Listener{
 			// rare
 			if(RNGesus.rng.getRandom() < 0.02)
 			{
-				switch(RNGesus.rng.getRandom(2))
+				switch(RNGesus.rng.getRandom(3))
 				{
 					case 0:
 						new MachineGunner(event.getLocation());
 						break;
 					case 1:
 						new Swapper(event.getLocation());
+						break;
+					case 2:
+						new KillerBunny(event.getLocation());
+						break;
 				}
 				event.setCancelled(true);
 				return;
@@ -229,15 +233,45 @@ public class RandomLootGenerator implements Listener{
 	@EventHandler
 	public void captureItemBreaks(PlayerItemBreakEvent event)
 	{
-		if(event.getBrokenItem().getItemMeta().hasLore())
+		if(event.getBrokenItem().hasItemMeta() && event.getBrokenItem().getItemMeta().hasEnchant(CustomEnchants.VANISHING))
 			RarityManager.rm.removeUser(event.getBrokenItem().getItemMeta().getDisplayName().substring(4));
 	}
+	
+	@EventHandler
+	public void onPlayerDrop(PlayerDropItemEvent event)
+	{
+		if(event.getItemDrop().getItemStack().hasItemMeta() && event.getItemDrop().getItemStack().getItemMeta().hasEnchant(CustomEnchants.VANISHING))
+			RarityManager.rm.removeUser(event.getItemDrop().getItemStack().getItemMeta().getDisplayName().substring(4));
+	}
 
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent event)	
+	{
+		if(event.getBlock().getState() instanceof Container && !(event.getBlock().getState() instanceof ShulkerBox))
+		{
+			Container c = (Container)event.getBlock().getState();
+			for(ItemStack i : c.getInventory().getContents())
+				if(i != null && i.hasItemMeta() && i.getItemMeta().hasEnchant(CustomEnchants.VANISHING))
+					RarityManager.rm.removeUser(i.getItemMeta().getDisplayName().substring(4));
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerPickup(EntityPickupItemEvent event)
+	{
+		if(event.getEntity() instanceof Player)
+			if(event.getItem().getItemStack().hasItemMeta() && event.getItem().getItemStack().getItemMeta().hasEnchant(CustomEnchants.VANISHING))
+				RarityManager.rm.addUser(event.getItem().getItemStack().getItemMeta().getDisplayName().substring(4));
+	}
+	/*
     @EventHandler
     public void onItemDespawnEvent(ItemDespawnEvent event) 
     {
-    	if(event.getEntity().getItemStack().getItemMeta().hasLore())
+    	if(event.getEntity().getItemStack().hasItemMeta() && event.getEntity().getItemStack().getItemMeta().hasLore())
+    	{
+    		System.out.println("despawning");
 			RarityManager.rm.removeUser(event.getEntity().getItemStack().getItemMeta().getDisplayName().substring(4));
+    	}
     }
 	
 	@EventHandler
@@ -254,6 +288,7 @@ public class RandomLootGenerator implements Listener{
 			}
 		}
 	}
+	*/
 	
 	@EventHandler
 	public void onInteractWithChest(PlayerInteractEvent event)

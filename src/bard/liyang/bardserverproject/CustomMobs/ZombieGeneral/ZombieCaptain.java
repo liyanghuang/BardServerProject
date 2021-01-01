@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import bard.liyang.bardserverproject.BardServerProject;
+import bard.liyang.bardserverproject.Util.RNGesus;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.EntityTypes;
 import net.minecraft.server.v1_16_R3.EntityZombie;
@@ -50,6 +51,9 @@ public class ZombieCaptain extends EntityZombie{
 		legs.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+
+		if(RNGesus.rng.getRandom(2) == 0)
+			craftZombie.setBaby();
 		
 		this.setSlot(EnumItemSlot.MAINHAND, CraftItemStack.asNMSCopy(sword));
 		this.setSlot(EnumItemSlot.HEAD, CraftItemStack.asNMSCopy(head));

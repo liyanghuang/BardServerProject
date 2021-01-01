@@ -63,6 +63,18 @@ public class CommandManager implements CommandExecutor{
 			new HydraSilverfish(Bukkit.getPlayer(sender.getName()).getLocation().add(4, 0, 0));
 			return true;
 		}
+		if(label.equals("loadyml"))
+		{
+			if(sender.isOp())
+				RarityManager.rm.loadData();
+			return true;
+		}
+		if(label.equals("printyml"))
+		{
+			if(sender.isOp())
+				RarityManager.rm.printData();
+			return true;
+		}
 		return false;
 	}
 }
